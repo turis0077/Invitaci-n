@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación al Cumpleaños - Aventura en Hyrule</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #d4af37;
+            --dark-gold: #b8942a;
+            --green: #2d5016;
+            --light-green: #4a7c2f;
+            --brown: #3d2817;
+            --cream: #f5e6d3;
+            --blue: #2563eb;
+        }
+
+        body {
+            font-family: 'Cinzel', serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: var(--cream);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Animated Background Stars */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Triforce Animation */
+        .triforce-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            animation: floatTriforce 4s ease-in-out infinite;
+        }
+
+        @keyframes floatTriforce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        .triforce {
+            width: 60px;
+            height: 60px;
+            position: relative;
+        }
+
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 26px solid var(--gold);
+            position: absolute;
+            animation: glowTriangle 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px var(--gold));
+        }
+
+        .triangle:nth-child(1) {
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            animation-delay: 0s;
+        }
+
+        .triangle:nth-child(2) {
+            bottom: 0;
+            left: 0;
+            animation-delay: 0.3s;
+        }
+
+        .triangle:nth-child(3) {
+            bottom: 0;
+            right: 0;
+            animation-delay: 0.6s;
+        }
+
+        @keyframes glowTriangle {
+            0%, 100% { filter: drop-shadow(0 0 5px var(--gold)); }
+            50% { filter: drop-shadow(0 0 20px var(--gold)) drop-shadow(0 0 30px var(--dark-gold)); }
+        }
+
+        /* Main Container */
+        .container {
+            position: relative;
+            max-width: 900px;
+            margin: 120px auto 50px;
+            padding: 20px;
+            z-index: 5;
+        }
+
+        /* Scroll Container */
+        .scroll-container {
+            background: linear-gradient(to bottom, var(--cream) 0%, #e8d5bc 100%);
+            border-radius: 20px;
+            padding: 60px 40px;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                inset 0 0 100px rgba(212, 175, 55, 0.1);
+            position: relative;
+            overflow: hidden;
+            animation: scrollUnfurl 1.5s ease-out;
+        }
+
+        @keyframes scrollUnfurl {
+            0% {
+                transform: scaleY(0);
+                opacity: 0;
+            }
+            100% {
+                transform: scaleY(1);
+                opacity: 1;
+            }
+        }
+
+        /* Decorative Corners */
+        .corner {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle at center, var(--gold), transparent);
+            opacity: 0.3;
+        }
+
+        .corner-tl { top: 0; left: 0; border-top-left-radius: 20px; }
+        .corner-tr { top: 0; right: 0; border-top-right-radius: 20px; }
+        .corner-bl { bottom: 0; left: 0; border-bottom-left-radius: 20px; }
+        .corner-br { bottom: 0; right: 0; border-bottom-right-radius: 20px; }
+
+        /* Title */
+        .title {
+            font-family: 'MedievalSharp', cursive;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: var(--green);
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            animation: titleGlow 3s ease-in-out infinite;
+            position: relative;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); }
+            50% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2), 0 0 20px rgba(212, 175, 55, 0.5); }
+        }
+
+        /* Sword Divider */
+        .sword-divider {
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            margin: 30px auto;
+            position: relative;
+            animation: swordShine 2s ease-in-out infinite;
+        }
+
+        .sword-divider::before {
+            content: '⚔️';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            background: var(--cream);
+            padding: 0 10px;
+        }
+
+        @keyframes swordShine {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; box-shadow: 0 0 20px var(--gold); }
+        }
+
+        /* Content Sections */
+        .section {
+            color: var(--brown);
+            margin: 30px 0;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 15px;
+            border: 2px solid var(--gold);
+            position: relative;
+            animation: fadeInUp 1s ease-out backwards;
+        }
+
+        .section:nth-child(1) { animation-delay: 0.2s; }
+        .section:nth-child(2) { animation-delay: 0.4s; }
+        .section:nth-child(3) { animation-delay: 0.6s; }
+        .section:nth-child(4) { animation-delay: 0.8s; }
+        .section:nth-child(5) { animation-delay: 1s; }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section h2 {
+            font-family: 'MedievalSharp', cursive;
+            color: var(--green);
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-icon {
+            font-size: 1.5em;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .section p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            line-height: 1.8;
+            margin: 10px 0;
+        }
+
+        /* RSVP Button */
+        .rsvp-button {
+            display: block;
+            margin: 40px auto;
+            padding: 20px 50px;
+            font-family: 'MedievalSharp', cursive;
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+            color: white;
+            background: linear-gradient(135deg, var(--green), var(--light-green));
+            border: 3px solid var(--gold);
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .rsvp-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .rsvp-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .rsvp-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 30px var(--gold);
+        }
+
+        .rsvp-button:active {
+            transform: scale(0.98);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: linear-gradient(to bottom, var(--cream) 0%, #e8d5bc 100%);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                inset 0 0 100px rgba(212, 175, 55, 0.1),
+                0 0 50px var(--gold);
+            border: 3px solid var(--gold);
+            position: relative;
+            animation: modalSlideIn 0.5s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: scale(0.8) translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            font-family: 'MedievalSharp', cursive;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            color: var(--green);
+            text-align: center;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-input-group {
+            margin-bottom: 20px;
+        }
+
+        .modal-label {
+            display: block;
+            font-family: 'MedievalSharp', cursive;
+            color: var(--brown);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 15px;
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            border: 2px solid var(--gold);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            color: var(--brown);
+            transition: all 0.3s ease;
+        }
+
+        .modal-input:focus {
+            outline: none;
+            border-color: var(--light-green);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .search-results {
+            margin-top: 15px;
+            max-height: 150px;
+            overflow-y: auto;
+            border: 2px solid var(--gold);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            display: none;
+        }
+
+        .search-results.active {
+            display: block;
+        }
+
+        .search-result-item {
+            padding: 12px 15px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            color: var(--brown);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-item:hover {
+            background: rgba(212, 175, 55, 0.2);
+        }
+
+        .family-list {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .family-list.active {
+            display: block;
+        }
+
+        .family-member {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin: 8px 0;
+            background: rgba(255, 255, 255, 0.6);
+            border: 2px solid var(--light-green);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .family-member:hover {
+            background: rgba(212, 175, 55, 0.2);
+            transform: translateX(5px);
+        }
+
+        .family-member input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 15px;
+            cursor: pointer;
+            accent-color: var(--green);
+        }
+
+        .family-member label {
+            font-family: 'Cinzel', serif;
+            color: var(--brown);
+            font-size: 1rem;
+            cursor: pointer;
+            flex-grow: 1;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .modal-button {
+            padding: 15px 30px;
+            font-family: 'MedievalSharp', cursive;
+            font-size: 1.1rem;
+            border: 2px solid var(--gold);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-button.confirm {
+            background: linear-gradient(135deg, var(--green), var(--light-green));
+            color: white;
+        }
+
+        .modal-button.confirm:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-button.cancel {
+            background: linear-gradient(135deg, #8b4513, #a0522d);
+            color: white;
+        }
+
+        .modal-button.cancel:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .error-message {
+            background: rgba(220, 38, 38, 0.1);
+            border: 2px solid #dc2626;
+            color: #991b1b;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-family: 'Cinzel', serif;
+            text-align: center;
+            display: none;
+        }
+
+        .error-message.active {
+            display: block;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .success-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, var(--green), var(--light-green));
+            color: var(--gold);
+            padding: 40px 60px;
+            border-radius: 20px;
+            border: 3px solid var(--gold);
+            font-family: 'MedievalSharp', cursive;
+            font-size: 1.5rem;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 50px var(--gold);
+            z-index: 2000;
+            display: none;
+            animation: successPop 0.5s ease-out;
+        }
+
+        .success-message.active {
+            display: block;
+        }
+
+        @keyframes successPop {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .info-message {
+            background: rgba(59, 130, 246, 0.1);
+            border: 2px solid #3b82f6;
+            color: #1e40af;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-family: 'Cinzel', serif;
+            text-align: center;
+            display: none;
+        }
+
+        .info-message.active {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        /* Music Note Animation */
+        .music-notes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .note {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0;
+            animation: floatNote 6s ease-in-out infinite;
+        }
+
+        @keyframes floatNote {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Heart Container */
+        .hearts-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .heart {
+            font-size: 30px;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5));
+        }
+
+        .heart:nth-child(1) { animation-delay: 0s; }
+        .heart:nth-child(2) { animation-delay: 0.2s; }
+        .heart:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.2); }
+            50% { transform: scale(1); }
+        }
+
+        /* Map Grid */
+        .map-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .map-item {
+            background: rgba(45, 80, 22, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid var(--light-green);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .map-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+            border-color: var(--gold);
+        }
+
+        .map-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 100px auto 30px;
+                padding: 15px;
+            }
+
+            .scroll-container {
+                padding: 40px 25px;
+            }
+
+            .triforce {
+                width: 50px;
+                height: 50px;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .map-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                padding: 30px 20px;
+                width: 95%;
+            }
+
+            .modal-buttons {
+                flex-direction: column;
+            }
+
+            .modal-button {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .scroll-container {
+                padding: 30px 20px;
+            }
+
+            .rsvp-button {
+                padding: 15px 35px;
+            }
+
+            .modal-content {
+                padding: 25px 15px;
+            }
+
+            .success-message {
+                padding: 30px 40px;
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeOut 1s ease-out 3s forwards;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                pointer-events: none;
+            }
+        }
+
+        .loading-triforce {
+            width: 100px;
+            height: 100px;
+            animation: loadingSpin 2s ease-in-out infinite;
+        }
+
+        @keyframes loadingSpin {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+        }
+
+        .loading-text {
+            margin-top: 30px;
+            font-family: 'MedievalSharp', cursive;
+            font-size: 1.5rem;
+            color: var(--gold);
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loading-triforce">
+            <div class="triforce">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+        </div>
+        <div class="loading-text">Cargando Aventura...</div>
+    </div>
+
+    <!-- Stars Background -->
+    <div class="stars" id="stars"></div>
+
+    <!-- Music Notes -->
+    <div class="music-notes" id="musicNotes"></div>
+
+    <!-- Floating Triforce -->
+    <div class="triforce-container">
+        <div class="triforce">
+            <div class="triangle"></div>
+            <div class="triangle"></div>
+            <div class="triangle"></div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="scroll-container">
+            <div class="corner corner-tl"></div>
+            <div class="corner corner-tr"></div>
+            <div class="corner corner-bl"></div>
+            <div class="corner corner-br"></div>
+
+            <h1 class="title">🗡️ Una Aventura en Hyrule Te Espera 🛡️</h1>
+            
+            <div class="hearts-container">
+                <span class="heart">❤️</span>
+                <span class="heart">❤️</span>
+                <span class="heart">❤️</span>
+            </div>
+
+            <div class="sword-divider"></div>
+
+            <div class="section">
+                <h2><span class="section-icon">📜</span>Proclamación Real</h2>
+                <p>Por orden de la Familia Real de Hyrule, se te convoca a una celebración épica en honor al cumpleaños de nuestro valiente héroe.</p>
+                <p>La leyenda predice que en esta fecha, las estrellas se alinearán y la magia llenará el reino. ¡Tu presencia es esencial para completar esta profecía!</p>
+            </div>
+
+            <div class="section">
+                <h2><span class="section-icon">📅</span>Fecha de la Aventura</h2>
+                <div class="map-grid">
+                    <div class="map-item">
+                        <div class="map-icon">📆</div>
+                        <strong>Fecha:</strong><br>
+                        [Inserta Fecha]
+                    </div>
+                    <div class="map-item">
+                        <div class="map-icon">⏰</div>
+                        <strong>Hora:</strong><br>
+                        [Inserta Hora]
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2><span class="section-icon">🗺️</span>Ubicación del Reino</h2>
+                <p><strong>🏰 Castillo:</strong> [Dirección del Evento]</p>
+                <p>Sigue las señales de la Trifuerza dorada y encontrarás nuestro reino escondido.</p>
+            </div>
+
+            <button class="rsvp-button" onclick="openRSVPModal()">
+                <span style="position: relative; z-index: 1;">⚔️ Confirma tu Asistencia ⚔️</span>
+            </button>
+
+            <div class="sword-divider"></div>
+
+            <p style="text-align: center; color: var(--brown); font-style: italic; margin-top: 30px;">
+                "El coraje no necesita ser recordado, pues nunca es olvidado."
+                <br>- Princesa Zelda
+            </p>
+        </div>
+    </div>
+
+    <!-- RSVP Modal -->
+    <div class="modal-overlay" id="rsvpModal">
+        <div class="modal-content">
+            <h2 class="modal-header">🗡️ Confirma tu Asistencia 🗡️</h2>
+            
+            <div class="modal-input-group">
+                <label class="modal-label" for="nameInput">Ingresa tu Nombre y Apellido:</label>
+                <input 
+                    type="text" 
+                    id="nameInput" 
+                    class="modal-input" 
+                    placeholder="Ej: Link Hyrule"
+                    autocomplete="off"
+                >
+            </div>
+
+            <!-- Search Results -->
+            <div class="search-results" id="searchResults"></div>
+
+            <!-- Error Message -->
+            <div class="error-message" id="errorMessage"></div>
+
+            <!-- Info Message -->
+            <div class="info-message" id="infoMessage"></div>
+
+            <!-- Family List -->
+            <div class="family-list" id="familyList">
+                <h3 style="font-family: 'MedievalSharp', cursive; color: var(--green); margin-bottom: 15px;">
+                    Selecciona quiénes asistirán:
+                </h3>
+                <div id="familyMembers"></div>
+
+                <div class="modal-buttons">
+                    <button class="modal-button confirm" onclick="confirmRSVP()">
+                        ✅ Confirmar
+                    </button>
+                    <button class="modal-button cancel" onclick="closeRSVPModal()">
+                        ❌ Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Message -->
+    <div class="success-message" id="successMessage">
+        ✨ ¡Confirmación Enviada! ✨
+        <br>
+        <span style="font-size: 1rem; margin-top: 10px; display: block;">
+            ¡Nos vemos en la aventura, héroe! 🗡️
+        </span>
+    </div>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        // Initialize EmailJS
+        (function() {
+            emailjs.init("YOUR_PUBLIC_KEY"); // Reemplaza con tu Public Key de EmailJS
+        })();
+
+        // XML de invitados (puedes modificar fácilmente)
+        const guestListXML = `<?xml version="1.0" encoding="UTF-8"?>
+<invitados>
+    <familia titular="Juan Chonito Pérez Mendoza">
+        <persona>Juan Chonito Pérez Mendoza</persona>
+        <persona>María López de Pérez</persona>
+        <persona>Carlos Pérez López</persona>
+        <persona>Ana Pérez López</persona>
+    </familia>
+    <familia titular="Ana García Rodríguez">
+        <persona>Ana García Rodríguez</persona>
+        <persona>Pedro García Martínez</persona>
+    </familia>
+    <familia titular="Roberto Silva González">
+        <persona>Roberto Silva González</persona>
+        <persona>Laura Silva Hernández</persona>
+        <persona>Sofía Silva Hernández</persona>
+    </familia>
+</invitados>`;
+
+        // Parse XML and create guest data structure
+        let guestData = [];
+        
+        function parseGuestList() {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(guestListXML, "text/xml");
+            const familias = xmlDoc.getElementsByTagName("familia");
+            
+            guestData = [];
+            
+            for (let i = 0; i < familias.length; i++) {
+                const titular = familias[i].getAttribute("titular");
+                const personas = familias[i].getElementsByTagName("persona");
+                const members = [];
+                
+                for (let j = 0; j < personas.length; j++) {
+                    members.push(personas[j].textContent);
+                }
+                
+                guestData.push({
+                    titular: titular,
+                    members: members
+                });
+            }
+        }
+
+        // Normalize text for comparison (remove accents, lowercase)
+        function normalizeText(text) {
+            return text
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .trim();
+        }
+
+        // Search function
+        let selectedFamily = null;
+
+        function searchGuest(searchTerm) {
+            const normalized = normalizeText(searchTerm);
+            
+            if (normalized.length < 2) {
+                return { titulares: [], miembros: [] };
+            }
+
+            const titulares = [];
+            const miembros = [];
+
+            // Split search term into words
+            const searchWords = normalized.split(/\s+/).filter(word => word.length > 0);
+
+            guestData.forEach(family => {
+                const normalizedTitular = normalizeText(family.titular);
+                const titularWords = normalizedTitular.split(/\s+/);
+                
+                // Check if all search words match any combination of titular's names
+                const allWordsMatch = searchWords.every(searchWord => 
+                    titularWords.some(titularWord => titularWord.includes(searchWord))
+                );
+                
+                if (allWordsMatch) {
+                    titulares.push(family);
+                } else {
+                    // Check if any member matches
+                    family.members.forEach(member => {
+                        const normalizedMember = normalizeText(member);
+                        const memberWords = normalizedMember.split(/\s+/);
+                        
+                        const memberMatches = searchWords.every(searchWord => 
+                            memberWords.some(memberWord => memberWord.includes(searchWord))
+                        );
+                        
+                        if (memberMatches && member !== family.titular) {
+                            // Avoid duplicates
+                            const alreadyAdded = miembros.some(m => 
+                                m.nombre === member && m.titular === family.titular
+                            );
+                            
+                            if (!alreadyAdded) {
+                                miembros.push({
+                                    nombre: member,
+                                    titular: family.titular
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+
+            return { titulares, miembros };
+        }
+
+        // Open modal
+        function openRSVPModal() {
+            document.getElementById('rsvpModal').classList.add('active');
+            document.getElementById('nameInput').focus();
+            parseGuestList(); // Parse XML when modal opens
+        }
+
+        // Close modal
+        function closeRSVPModal() {
+            document.getElementById('rsvpModal').classList.remove('active');
+            resetModal();
+        }
+
+        // Reset modal state
+        function resetModal() {
+            document.getElementById('nameInput').value = '';
+            document.getElementById('searchResults').classList.remove('active');
+            document.getElementById('searchResults').innerHTML = '';
+            document.getElementById('errorMessage').classList.remove('active');
+            document.getElementById('infoMessage').classList.remove('active');
+            document.getElementById('familyList').classList.remove('active');
+            document.getElementById('familyMembers').innerHTML = '';
+            selectedFamily = null;
+        }
+
+        // Handle input changes
+        document.addEventListener('DOMContentLoaded', function() {
+            const nameInput = document.getElementById('nameInput');
+            
+            nameInput.addEventListener('input', function(e) {
+                const searchTerm = e.target.value;
+                const results = searchGuest(searchTerm);
+                const searchResultsDiv = document.getElementById('searchResults');
+                const errorMessage = document.getElementById('errorMessage');
+                const infoMessage = document.getElementById('infoMessage');
+                const familyList = document.getElementById('familyList');
+                
+                // Reset states
+                searchResultsDiv.innerHTML = '';
+                searchResultsDiv.classList.remove('active');
+                errorMessage.classList.remove('active');
+                infoMessage.classList.remove('active');
+                familyList.classList.remove('active');
+                
+                if (searchTerm.length < 2) {
+                    return;
+                }
+                
+                // Show results for titulares
+                if (results.titulares.length > 0) {
+                    searchResultsDiv.classList.add('active');
+                    
+                    results.titulares.forEach(family => {
+                        const item = document.createElement('div');
+                        item.className = 'search-result-item';
+                        item.textContent = family.titular;
+                        item.onclick = () => selectFamily(family);
+                        searchResultsDiv.appendChild(item);
+                    });
+                } 
+                // Show info message if member found
+                else if (results.miembros.length > 0) {
+                    infoMessage.textContent = `📋 "${results.miembros[0].nombre}" no es el titular. Por favor, consulta con ${results.miembros[0].titular} para confirmar la asistencia.`;
+                    infoMessage.classList.add('active');
+                } 
+                // Show error if no results
+                else if (searchTerm.length >= 3) {
+                    errorMessage.textContent = '❌ No se encontró tu nombre en la lista. Verifica que esté bien escrito o consulta al organizador.';
+                    errorMessage.classList.add('active');
+                }
+            });
+        });
+
+        // Select family and show members
+        function selectFamily(family) {
+            selectedFamily = family;
+            const familyMembersDiv = document.getElementById('familyMembers');
+            const familyList = document.getElementById('familyList');
+            const searchResultsDiv = document.getElementById('searchResults');
+            
+            familyMembersDiv.innerHTML = '';
+            searchResultsDiv.classList.remove('active');
+            familyList.classList.add('active');
+            
+            family.members.forEach((member, index) => {
+                const memberDiv = document.createElement('div');
+                memberDiv.className = 'family-member';
+                
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = `member-${index}`;
+                checkbox.value = member;
+                checkbox.checked = true; // Por defecto todos seleccionados
+                
+                const label = document.createElement('label');
+                label.htmlFor = `member-${index}`;
+                label.textContent = member;
+                
+                memberDiv.appendChild(checkbox);
+                memberDiv.appendChild(label);
+                familyMembersDiv.appendChild(memberDiv);
+            });
+        }
+
+        // Confirm RSVP and send email
+        async function confirmRSVP() {
+            if (!selectedFamily) {
+                return;
+            }
+
+            const checkboxes = document.querySelectorAll('#familyMembers input[type="checkbox"]');
+            const attending = [];
+            const notAttending = [];
+            
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    attending.push(checkbox.value);
+                } else {
+                    notAttending.push(checkbox.value);
+                }
+            });
+
+            if (attending.length === 0) {
+                alert('⚠️ Debes seleccionar al menos una persona que asistirá.');
+                return;
+            }
+
+            // Prepare email data
+            const emailData = {
+                to_email: 'turiscruz@gmail.com',
+                titular: selectedFamily.titular,
+                attending_list: attending.join('\n- '),
+                not_attending_list: notAttending.length > 0 ? notAttending.join('\n- ') : 'Ninguno',
+                total_attending: attending.length,
+                total_members: selectedFamily.members.length
+            };
+
+            try {
+                // Send email using EmailJS
+                // Necesitarás crear un template en EmailJS con estos parámetros
+                await emailjs.send(
+                    'YOUR_SERVICE_ID',  // Reemplaza con tu Service ID
+                    'YOUR_TEMPLATE_ID', // Reemplaza con tu Template ID
+                    emailData
+                );
+
+                // Show success message
+                closeRSVPModal();
+                showSuccessMessage();
+                
+            } catch (error) {
+                console.error('Error sending email:', error);
+                alert('❌ Hubo un error al enviar la confirmación. Por favor, intenta de nuevo o contacta al organizador.');
+            }
+        }
+
+        // Show success message
+        function showSuccessMessage() {
+            const successMessage = document.getElementById('successMessage');
+            successMessage.classList.add('active');
+            
+            // Create sparkles
+            createSuccessSparkles();
+            
+            setTimeout(() => {
+                successMessage.classList.remove('active');
+            }, 4000);
+        }
+
+        // Create sparkles effect
+        function createSuccessSparkles() {
+            const sparkleCount = 30;
+            
+            for (let i = 0; i < sparkleCount; i++) {
+                setTimeout(() => {
+                    const sparkle = document.createElement('div');
+                    sparkle.textContent = '✨';
+                    sparkle.style.position = 'fixed';
+                    sparkle.style.left = Math.random() * window.innerWidth + 'px';
+                    sparkle.style.top = Math.random() * window.innerHeight + 'px';
+                    sparkle.style.pointerEvents = 'none';
+                    sparkle.style.zIndex = '10000';
+                    sparkle.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                    sparkle.style.animation = 'sparkleFade 2s ease-out forwards';
+                    
+                    document.body.appendChild(sparkle);
+                    
+                    setTimeout(() => sparkle.remove(), 2000);
+                }, i * 100);
+            }
+        }
+
+        // Add sparkle animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes sparkleFade {
+                0% {
+                    opacity: 1;
+                    transform: scale(0) rotate(0deg);
+                }
+                50% {
+                    opacity: 1;
+                    transform: scale(1.5) rotate(180deg);
+                }
+                100% {
+                    opacity: 0;
+                    transform: scale(0) rotate(360deg);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Close modal when clicking outside
+        document.getElementById('rsvpModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeRSVPModal();
+            }
+        });
+
+        // Create stars background
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 100;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Create floating music notes
+        function createMusicNotes() {
+            const musicContainer = document.getElementById('musicNotes');
+            const notes = ['♪', '♫', '♬'];
+            
+            setInterval(() => {
+                const note = document.createElement('div');
+                note.className = 'note';
+                note.textContent = notes[Math.floor(Math.random() * notes.length)];
+                note.style.left = Math.random() * 100 + '%';
+                note.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                note.style.color = `hsl(${Math.random() * 60 + 30}, 70%, 60%)`;
+                
+                musicContainer.appendChild(note);
+                
+                setTimeout(() => {
+                    note.remove();
+                }, 6000);
+            }, 2000);
+        }
+
+        // Add scroll animations
+        function handleScroll() {
+            const sections = document.querySelectorAll('.section');
+            
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                const isVisible = rect.top < window.innerHeight - 100;
+                
+                if (isVisible) {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }
+            });
+        }
+
+        // Easter egg: Konami code
+        let konamiCode = [];
+        const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+
+        document.addEventListener('keydown', (e) => {
+            konamiCode.push(e.key);
+            konamiCode = konamiCode.slice(-10);
+            
+            if (konamiCode.join(',') === konamiSequence.join(',')) {
+                activateSecretMode();
+            }
+        });
+
+        function activateSecretMode() {
+            document.body.style.animation = 'rainbow 2s linear infinite';
+            alert('🎮 ¡Has desbloqueado el Modo Secreto! ¡La Trifuerza te sonríe! 🎮');
+            
+            // Add rainbow animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes rainbow {
+                    0% { filter: hue-rotate(0deg); }
+                    100% { filter: hue-rotate(360deg); }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // Initialize everything
+        window.addEventListener('load', () => {
+            createStars();
+            createMusicNotes();
+        });
+
+        window.addEventListener('scroll', handleScroll);
+        
+        // Initial check for visible sections
+        handleScroll();
+    </script>
+</body>
+</html>
