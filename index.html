@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invitación al Cumpleaños - Aventura en Hyrule</title>
+    <title>Invitación Turis</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700&display=swap');
 
@@ -691,6 +691,171 @@
             border-radius: 12px;
         }
 
+        /* Navigation Buttons */
+        .navigation-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 25px;
+            font-family: 'MedievalSharp', cursive;
+            font-size: 1rem;
+            text-decoration: none;
+            border-radius: 50px;
+            border: 2px solid var(--gold);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-button.google-maps {
+            background: linear-gradient(135deg, #4285f4, #34a853);
+            color: white;
+        }
+
+        .nav-button.waze {
+            background: linear-gradient(135deg, #33ccff, #00d4ff);
+            color: white;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-icon {
+            font-size: 1.2em;
+        }
+
+        /* Countdown Timer */
+        .countdown-container {
+            margin-top: 30px;
+        }
+
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 15px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .countdown-item {
+            background: linear-gradient(135deg, var(--green), var(--light-green));
+            padding: 20px 10px;
+            border-radius: 15px;
+            border: 2px solid var(--gold);
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            animation: countdownPulse 2s ease-in-out infinite;
+        }
+
+        .countdown-item:nth-child(1) { animation-delay: 0s; }
+        .countdown-item:nth-child(2) { animation-delay: 0.2s; }
+        .countdown-item:nth-child(3) { animation-delay: 0.4s; }
+        .countdown-item:nth-child(4) { animation-delay: 0.6s; }
+
+        @keyframes countdownPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .countdown-number {
+            font-family: 'MedievalSharp', cursive;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: var(--gold);
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .countdown-label {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(0.8rem, 2vw, 1rem);
+            color: var(--cream);
+            margin-top: 5px;
+        }
+
+        /* Calendar Button */
+        .calendar-button {
+            padding: 15px 30px;
+            font-family: 'MedievalSharp', cursive;
+            font-size: 1.1rem;
+            color: white;
+            background: linear-gradient(135deg, #8b4513, #a0522d);
+            border: 2px solid var(--gold);
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .calendar-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Footer Info */
+        .footer-info {
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            border: 1px solid var(--gold);
+            text-align: center;
+            color: var(--brown);
+            font-size: 0.95rem;
+        }
+
+        .footer-info p {
+            margin: 5px 0;
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .loading-content {
+            background: linear-gradient(to bottom, var(--cream) 0%, #e8d5bc 100%);
+            padding: 40px 60px;
+            border-radius: 20px;
+            border: 3px solid var(--gold);
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 50px var(--gold);
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            animation: loadingSpin 1s linear infinite;
+        }
+
+        .loading-content p {
+            font-family: 'MedievalSharp', cursive;
+            font-size: 1.3rem;
+            color: var(--green);
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .container {
@@ -727,6 +892,18 @@
             .modal-button {
                 width: 100%;
             }
+
+            .navigation-buttons {
+                flex-direction: column;
+            }
+
+            .nav-button {
+                width: 100%;
+            }
+
+            .countdown-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @media (max-width: 480px) {
@@ -745,6 +922,18 @@
             .success-message {
                 padding: 30px 40px;
                 font-size: 1.2rem;
+            }
+
+            .countdown-number {
+                font-size: 1.5rem;
+            }
+
+            .countdown-label {
+                font-size: 0.7rem;
+            }
+
+            .footer-info {
+                font-size: 0.85rem;
             }
         }
 
@@ -862,6 +1051,38 @@
                         12:45 pm
                     </div>
                 </div>
+
+                <!-- Countdown Timer -->
+                <div class="countdown-container">
+                    <h3 style="font-family: 'MedievalSharp', cursive; color: var(--green); text-align: center; margin-bottom: 20px; margin-top: 30px;">
+                        ⏳ Cuenta Regresiva para la Aventura ⏳
+                    </h3>
+                    <div class="countdown-grid" id="countdown">
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="days">--</div>
+                            <div class="countdown-label">Días</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="hours">--</div>
+                            <div class="countdown-label">Horas</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="minutes">--</div>
+                            <div class="countdown-label">Minutos</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="seconds">--</div>
+                            <div class="countdown-label">Segundos</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add to Calendar Button -->
+                <div style="text-align: center; margin-top: 25px;">
+                    <button class="calendar-button" onclick="addToCalendar()">
+                        📅 Agregar a mi Calendario
+                    </button>
+                </div>
             </div>
 
             <div class="section">
@@ -871,6 +1092,16 @@
                 
                 <div class="map-container">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d668.4567267532543!2d-90.7965207850809!3d14.53369534345789!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x858911003e2b567f%3A0xfc14b4ce94e426c6!2sLos%20Sauces%20de%20Don%20Jorge!5e1!3m2!1ses-419!2sgt!4v1764477427798!5m2!1ses-419!2sgt" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+                <div class="navigation-buttons">
+                    <a href="https://www.google.com/maps/search/?api=1&query=Los+Sauces+de+Don+Jorge" target="_blank" class="nav-button google-maps">
+                        <span class="nav-icon">📍</span>
+                        Abrir en Google Maps
+                    </a>
+                    <a href="https://waze.com/ul?q=Los%20Sauces%20de%20Don%20Jorge&navigate=yes" target="_blank" class="nav-button waze">
+                        <span class="nav-icon">🚗</span>
+                        Abrir en Waze
+                    </a>
                 </div>
             </div>
 
@@ -884,6 +1115,14 @@
                 "El coraje no necesita ser recordado, pues nunca es olvidado."
                 <br>- Princesa Zelda
             </p>
+
+            <!-- Footer with Contact Info -->
+            <div class="footer-info">
+                <p><strong>📞 Contacto para dudas:</strong> +502 5562 2583</p>
+                <p style="margin-top: 10px; font-size: 0.9rem; opacity: 0.8;">
+                    ⚔️ <em>Nota importante:</em> El festín real ha sido preparado cuidadosamente para el número exacto de invitados confirmados. Por favor, confirma únicamente por las personas asignadas a tu grupo. ¡Gracias por tu comprensión, valiente aventurero!
+                </p>
+            </div>
         </div>
     </div>
 
@@ -893,7 +1132,7 @@
             <h2 class="modal-header">🗡️ Confirma tu Asistencia 🗡️</h2>
             
             <div class="modal-input-group">
-                <label class="modal-label" for="nameInput">Ingresa tu Nombre y Apellido:</label>
+                <label class="modal-label" for="nameInput">Ingresa tu Nombre:</label>
                 <input 
                     type="text" 
                     id="nameInput" 
@@ -940,15 +1179,29 @@
         </span>
     </div>
 
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-spinner">
+                <div class="triforce">
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                </div>
+            </div>
+            <p>Enviando confirmación...</p>
+        </div>
+    </div>
+
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script>
         // Initialize EmailJS
         (function() {
-            emailjs.init("YzWOzFQRTxZQM7mEv"); // Reemplaza con tu Public Key de EmailJS
+            emailjs.init("YOUR_PUBLIC_KEY");
         })();
 
-        // XML de invitados (puedes modificar fácilmente)
-    const guestListXML = `<?xml version="1.0" encoding="UTF-8"?>
+        // XML de invitados
+        const guestListXML = `<?xml version="1.0" encoding="UTF-8"?>
 <invitados>
     <familia titular="Celeste Mencos de Lima">
         <persona>Celeste Mencos de Lima</persona>
@@ -1236,29 +1489,29 @@
                 }
             });
 
-            if (attending.length === 0) {
-                alert('⚠️ Debes seleccionar al menos una persona que asistirá.');
-                return;
-            }
-
             // Prepare email data
             const emailData = {
                 to_email: 'turiscruz@gmail.com',
                 titular: selectedFamily.titular,
-                attending_list: attending.join('\n- '),
+                attending_list: attending.length > 0 ? attending.join('\n- ') : 'Ninguno',
                 not_attending_list: notAttending.length > 0 ? notAttending.join('\n- ') : 'Ninguno',
                 total_attending: attending.length,
                 total_members: selectedFamily.members.length
             };
 
+            // Show loading overlay
+            document.getElementById('loadingOverlay').classList.add('active');
+
             try {
                 // Send email using EmailJS
-                // Necesitarás crear un template en EmailJS con estos parámetros
                 await emailjs.send(
-                    'service_ij3zowh',  // Reemplaza con tu Service ID
-                    'template_sn0f2yg', // Reemplaza con tu Template ID
+                    'service_ij3zowh',
+                    'template_sn0f2yg',
                     emailData
                 );
+
+                // Hide loading overlay
+                document.getElementById('loadingOverlay').classList.remove('active');
 
                 // Show success message
                 closeRSVPModal();
@@ -1266,9 +1519,104 @@
                 
             } catch (error) {
                 console.error('Error sending email:', error);
-                alert('❌ Hubo un error al enviar la confirmación. Por favor, intenta de nuevo o contacta al organizador.');
+                
+                // Hide loading overlay
+                document.getElementById('loadingOverlay').classList.remove('active');
+                
+                // Show error in modal instead of alert
+                const errorMessage = document.getElementById('errorMessage');
+                errorMessage.textContent = '❌ Hubo un error al enviar la confirmación. Por favor, intenta de nuevo o contacta al organizador.';
+                errorMessage.classList.add('active');
             }
         }
+
+        // Add to Calendar function
+        function addToCalendar() {
+            // Event details
+            const eventTitle = 'Cumpleaños de Axel';
+            const eventLocation = 'Los Sauces de Don Jorge';
+            const eventDescription = 'Celebración del vigésimo cumpleaños de Sir Axel Arturo Cruz Lima.';
+            
+            // Date: December 6, 2025 at 12:45 PM Guatemala time
+            const startDate = new Date('2025-12-06T12:45:00');
+            const endDate = new Date('2025-12-06T18:00:00'); // Assuming 5.25 hour duration
+            
+            // Format dates for ICS (iCalendar format)
+            function formatICSDate(date) {
+                return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+            }
+            
+            // Create ICS content
+            const icsContent = [
+                'BEGIN:VCALENDAR',
+                'VERSION:2.0',
+                'PRODID:-//Invitación Zelda//ES',
+                'CALSCALE:GREGORIAN',
+                'METHOD:PUBLISH',
+                'BEGIN:VEVENT',
+                `DTSTART:${formatICSDate(startDate)}`,
+                `DTEND:${formatICSDate(endDate)}`,
+                `SUMMARY:${eventTitle}`,
+                `DESCRIPTION:${eventDescription}`,
+                `LOCATION:${eventLocation}`,
+                'STATUS:CONFIRMED',
+                'BEGIN:VALARM',
+                'TRIGGER:-PT24H',
+                'ACTION:DISPLAY',
+                'DESCRIPTION:Recordatorio: Aventura en Hyrule mañana',
+                'END:VALARM',
+                'END:VEVENT',
+                'END:VCALENDAR'
+            ].join('\r\n');
+            
+            // Create blob and download
+            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'cumpleanos-axel-hyrule.ics';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Also try to open Google Calendar
+            const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${formatICSDate(startDate)}/${formatICSDate(endDate)}&details=${encodeURIComponent(eventDescription)}&location=${encodeURIComponent(eventLocation)}`;
+            
+            // Show options to user
+            setTimeout(() => {
+                if (confirm('✅ Archivo descargado.\n\n¿Quieres abrir Google Calendar para agregarlo también?')) {
+                    window.open(googleCalendarUrl, '_blank');
+                }
+            }, 500);
+        }
+
+        // Countdown Timer
+        function updateCountdown() {
+            const eventDate = new Date('2025-12-06T12:45:00').getTime();
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+            
+            if (distance < 0) {
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
+                return;
+            }
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+
+        // Start countdown
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
 
         // Show success message
         function showSuccessMessage() {
